@@ -68,8 +68,17 @@ export const generatePolicyPDF = async (data: PolicyData): Promise<Buffer> => {
 
     // Iniciar Puppeteer
     const browser = await puppeteer.launch({
-      headless: true, // Cambiado de 'new' a true
-      args: ['--no-sandbox'],
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--single-process',
+      ],
+      defaultViewport: {
+        width: 1920,
+        height: 1080,
+      },
     });
     const page = await browser.newPage();
 
