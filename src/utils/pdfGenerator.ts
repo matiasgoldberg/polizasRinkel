@@ -1,7 +1,7 @@
 // src/utils/pdfGenerator.ts
 import fs from 'fs';
 import path from 'path';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 
 interface PolicyData {
   id: string;
@@ -35,13 +35,8 @@ export const generatePolicyPDF = async (data: PolicyData): Promise<Buffer> => {
     const templatePath = path.join(__dirname, '../templates/policy.html');
     let template = fs.readFileSync(templatePath, 'utf-8');
 
-    // Leer el logo y convertirlo a base64
-    const logoPath = path.join(__dirname, '../assets/logo.png');
-    const logoBase64 = fs.readFileSync(logoPath).toString('base64');
-
     // Reemplazar todas las variables en el template
     const replacements = {
-      '{{LOGO_BASE64}}': logoBase64,
       '{{ID}}': data.id,
       '{{PLAN}}': data.plan,
       '{{NOMBRE}}': data.beneficiario.nombre,
@@ -66,23 +61,21 @@ export const generatePolicyPDF = async (data: PolicyData): Promise<Buffer> => {
       template = template.replace(new RegExp(key, 'g'), value);
     });
 
-    // Iniciar Puppeteer
     const browser = await puppeteer.launch({
-      headless: true,
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
-        '--single-process',
       ],
-      defaultViewport: {
-        width: 1920,
-        height: 1080,
-      },
+      executablePath:
+        process.env.CHROME_PATH ||
+        (process.platform === 'win32'
+          ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+          : '/usr/bin/google-chrome'),
+      headless: true,
     });
-    const page = await browser.newPage();
 
-    // Cargar el HTML
+    const page = await browser.newPage();
     await page.setContent(template, {
       waitUntil: 'networkidle0',
     });
@@ -100,7 +93,7 @@ export const generatePolicyPDF = async (data: PolicyData): Promise<Buffer> => {
     });
 
     await browser.close();
-    return Buffer.from(pdfBuffer); // Convertido explícitamente a Buffer
+    return Buffer.from(pdfBuffer);
   } catch (error) {
     console.error('Error generando PDF:', error);
     throw error;
