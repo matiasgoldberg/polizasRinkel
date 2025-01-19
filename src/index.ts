@@ -1,0 +1,29 @@
+import express from 'express';
+import swaggerUi from 'swagger-ui-express';
+import dotenv from 'dotenv';
+import emailRoutes from './routes/email';
+import { swaggerDocument } from './config/swagger';
+
+// Configurar variables de entorno
+dotenv.config();
+
+const app = express();
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Documentación Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// Rutas
+app.use('/api', emailRoutes);
+
+// Puerto
+const PORT = process.env.PORT || 3000;
+
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Documentación disponible en http://localhost:${PORT}/api-docs`);
+});

@@ -1,0 +1,139 @@
+<!-- src/templates/policy.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+      .header img {
+        width: 200px;
+        margin-bottom: 20px;
+      }
+      .main-info {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .section {
+        background-color: #cc0000;
+        color: white;
+        padding: 5px 10px;
+        font-weight: bold;
+        margin: 10px 0;
+      }
+      .content {
+        margin: 10px 0 20px 0;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .field {
+        margin: 5px 0;
+      }
+      .label {
+        font-weight: bold;
+      }
+      .credential-section {
+        margin-top: 40px;
+        text-align: center;
+      }
+      .credential-box {
+        border: 2px solid #cc0000;
+        padding: 20px;
+        margin: 20px auto;
+        width: 80%;
+      }
+      .contact-info {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .phone-number {
+        font-size: 24px;
+        color: #cc0000;
+        font-weight: bold;
+      }
+      .whatsapp {
+        color: #25d366;
+      }
+      .footer {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <img src="data:image/png;base64,{{LOGO_BASE64}}" alt="RESCATE" />
+    </div>
+
+    <div class="main-info">
+      <div>ID {{ID}}</div>
+      <div>PLAN R - ILIMITADO</div>
+    </div>
+
+    <div class="section">DATOS DEL BENEFICIARIO</div>
+    <div class="content">
+      <div class="field">
+        <span class="label">Apellido y Nombre:</span> {{NOMBRE}}
+      </div>
+      <div class="field">
+        <span class="label">Fecha de Emisión:</span> {{FECHA_EMISION}}
+      </div>
+      <div class="field"><span class="label">DNI:</span> {{DNI}}</div>
+      <div class="field">
+        <span class="label">Condición:</span> {{CONDICION}}
+      </div>
+      <div class="field"><span class="label">Celular:</span> {{CELULAR}}</div>
+      <div class="field"><span class="label">Email:</span> {{EMAIL}}</div>
+    </div>
+
+    <div class="section">DOMICILIO</div>
+    <div class="content">
+      <div class="field">
+        <span class="label">Dirección:</span> {{DIRECCION}}
+      </div>
+      <div class="field">
+        <span class="label">Localidad:</span> {{LOCALIDAD}}
+      </div>
+      <div class="field"><span class="label">CP:</span> {{CP}}</div>
+      <div class="field">
+        <span class="label">Provincia:</span> {{PROVINCIA}}
+      </div>
+    </div>
+
+    <div class="section">DATOS DEL VEHICULO DESIGNADO</div>
+    <div class="content">
+      <div class="field"><span class="label">Marca:</span> {{MARCA}}</div>
+      <div class="field"><span class="label">Modelo:</span> {{MODELO}}</div>
+      <div class="field"><span class="label">Color:</span> {{COLOR}}</div>
+      <div class="field"><span class="label">Patente:</span> {{PATENTE}}</div>
+    </div>
+
+    <div class="section">MEDIO DE PAGO</div>
+    <div class="content">
+      <div class="field">{{MEDIO_PAGO}}</div>
+    </div>
+
+    <div class="credential-section">
+      <h2>TU CREDENCIAL</h2>
+      <div class="credential-box">
+        <div>AUTO - R ILIMITADO</div>
+        <div>SOCIO: {{NOMBRE}}</div>
+        <div>ID: {{ID}}</div>
+      </div>
+    </div>
+
+    <div class="contact-info">
+      <p>Para solicitar asistencia llama al:</p>
+      <div class="phone-number">0800 - 122 -0498</div>
+      <div class="whatsapp">+54 (11) 5163 - 8954</div>
+      <p>Solo mensajes</p>
+      <div class="website">WWW.RESCATE.COM.AR</div>
+    </div>
+  </body>
+</html>
