@@ -22,6 +22,14 @@ app.use('/api', emailRoutes);
 // Puerto
 const PORT = process.env.PORT || 3000;
 
+app.get('/', (req, res) => {
+  res.send({
+    message: 'API de Emails para Pólizas',
+    docs: '/api-docs',
+    version: '1.0.0',
+  });
+});
+
 // Iniciar servidor
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
