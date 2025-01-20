@@ -17,15 +17,22 @@ ENV CHROME_PATH=/usr/bin/google-chrome
 # Create app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies
+# Copy package files
 COPY package*.json ./
+
+# Install TypeScript globally
+RUN npm install -g typescript
+
+# Install dependencies
 RUN npm install
 
-# Bundle app source
+# Copy source
 COPY . .
 
 # Build TypeScript
 RUN npm run build
+
+EXPOSE 3000
 
 # Start the server
 CMD [ "npm", "start" ]
