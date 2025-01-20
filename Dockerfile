@@ -21,8 +21,14 @@ RUN npm install
 # Copy source files
 COPY . .
 
+# Bundle app source
+COPY . .
+
 # Build TypeScript
 RUN npm run build
+
+# Copiar templates al directorio dist
+RUN cp -r src/templates dist/
 
 # Environment variables
 ENV PORT=3000
