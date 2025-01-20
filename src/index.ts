@@ -3,11 +3,21 @@ import swaggerUi from 'swagger-ui-express';
 import dotenv from 'dotenv';
 import emailRoutes from './routes/email';
 import { swaggerDocument } from './config/swagger';
+import cors from 'cors';
 
 // Configurar variables de entorno
 dotenv.config();
 
 const app = express();
+
+// Configurar CORS
+app.use(
+  cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 
 // Middleware
 app.use(express.json());
