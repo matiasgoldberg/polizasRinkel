@@ -8,8 +8,8 @@ export const swaggerDocument = {
   },
   servers: [
     {
-      url: 'http://localhost:3000',
-      description: 'Servidor de desarrollo',
+      url: 'https://web-production-04bb4.up.railway.app',
+      description: 'Servidor de producción',
     },
   ],
   paths: {
