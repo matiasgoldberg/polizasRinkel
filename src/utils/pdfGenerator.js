@@ -1,4 +1,4 @@
-//src/utils/pdfGenerator.js
+// src/utils/pdfGenerator.js
 'use strict';
 var __awaiter =
   (this && this.__awaiter) ||
