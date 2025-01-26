@@ -1,4 +1,4 @@
-//src/routes/email.js
+// src/routes/email.js
 'use strict';
 var __awaiter =
   (this && this.__awaiter) ||
