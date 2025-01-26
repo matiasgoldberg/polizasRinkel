@@ -2,7 +2,7 @@
 import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import nodemailer from 'nodemailer';
-import { generatePolicyPDF } from '../utils/pdfGenerator';
+import { generatePolicyPDF } from '../utils/excelGenerator';
 
 const router = express.Router();
 
