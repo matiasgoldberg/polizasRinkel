@@ -1,266 +1,307 @@
-<!-- src/templates/policy.html -->
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Póliza</title>
+    <title>Rescate - Credencial</title>
     <style>
-      /* -------------------- RESET Y BASE -------------------- */
-      * {
-        box-sizing: border-box;
-      }
       body {
-        margin: 0;
-        padding: 0;
         font-family: Arial, sans-serif;
-        color: #333;
-      }
-
-      /* -------------------- HEADER ROJO -------------------- */
-      .header {
-        background-color: #d32f2f; /* Rojo */
-        color: #fff;
-        padding: 10px;
-        display: flex;
-        align-items: center;
-      }
-      .header img {
-        height: 40px;
-        margin-right: 20px;
-      }
-      .header h1 {
-        font-size: 24px;
-        margin: 0;
-      }
-
-      /* -------------------- WRAPPER DE CONTENIDO -------------------- */
-      .wrapper {
+        max-width: 800px;
+        margin: 20px auto;
         padding: 20px;
       }
 
-      /* -------------------- MAIN INFO (ID, PLAN) -------------------- */
+      .yellow-bar {
+        background-color: #f6e847;
+        height: 40px;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .logo-container {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .logo {
+        width: 300px;
+        height: auto;
+      }
+
       .main-info {
         display: flex;
         justify-content: space-between;
         margin-bottom: 20px;
+        color: #000;
         font-weight: bold;
-        font-size: 16px;
       }
 
-      /* -------------------- SECCIONES ROJAS (TÍTULO) -------------------- */
-      .section {
-        background-color: #cc0000; /* Rojo más oscuro */
-        color: #fff;
-        padding: 5px 10px;
+      .section-header {
+        background-color: #f6e847;
+        padding: 8px;
         font-weight: bold;
-        margin: 20px 0 10px 0;
+        color: #e0251b;
+        border: 2px solid #000;
+        margin-bottom: 0;
       }
 
-      /* -------------------- GRID DE 2 COLUMNAS PARA LOS CAMPOS -------------------- */
-      .content {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
         margin-bottom: 20px;
-      }
-      .field {
-        margin: 5px 0;
-      }
-      .label {
-        font-weight: bold;
+        border: 2px solid #000;
       }
 
-      /* -------------------- TEXTO DE CONDICIONES EN 1 COLUMNA -------------------- */
-      .disclaimer-content {
-        grid-column: 1 / span 2; /* Ocupar las 2 columnas del grid */
-        line-height: 1.4;
-        margin-bottom: 20px;
+      .data-table td {
+        border: 2px solid #000;
+        padding: 8px;
+        color: #000;
       }
 
-      /* -------------------- FOOTER CON DOS CAJAS -------------------- */
-      .footer {
+      .credential-container {
         display: flex;
         justify-content: space-between;
-        padding: 15px;
-        background-color: #f9f9f9;
+        margin-top: 20px;
       }
-      .credential-box,
-      .assistance-box {
-        border: 1px solid #ccc;
+
+      .credential {
+        border: 3px solid #e0251b;
+        padding: 20px;
+        width: 45%;
+        border-radius: 15px;
+        text-align: center;
+      }
+
+      .yellow-box {
+        background-color: #f6e847;
+        padding: 8px;
+        margin: 5px 0;
+        text-align: center;
+        color: #e0251b;
+        font-weight: bold;
+        border: 2px solid #000;
+      }
+
+      .contact-box {
+        border: 3px solid #e0251b;
+        border-radius: 15px;
+        padding: 20px;
+        width: 45%;
+      }
+
+      .contact-title {
+        background-color: #f6e847;
+        color: #e0251b;
+        font-weight: bold;
+        text-align: center;
         padding: 10px;
-        width: 48%;
-        box-sizing: border-box;
-        border-radius: 4px;
-        background-color: #fff;
-      }
-      .credential-box h3,
-      .assistance-box h3 {
-        margin-top: 0;
-        margin-bottom: 10px;
-        color: #d32f2f;
+        border-radius: 10px;
+        border: 2px solid #000;
       }
 
-      /* Detalles de la caja de credencial */
-      .id-value {
-        font-size: 16px;
+      .phone-number {
+        background-color: #f6e847;
+        color: #e0251b;
+        font-size: 28px;
         font-weight: bold;
-        margin-bottom: 5px;
-      }
-      .plan-value {
-        font-size: 14px;
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
-      .socio-value {
-        font-size: 14px;
-        margin-bottom: 5px;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        border: 2px solid #000;
+        margin: 15px 0;
       }
 
-      /* Detalles de la caja de asistencia */
-      .phone {
-        font-size: 16px;
+      .whatsapp-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 15px 0;
+        color: #e0251b;
         font-weight: bold;
-        margin-bottom: 5px;
+        font-size: 20px;
       }
-      .whatsapp {
+
+      .terms {
+        margin: 20px 0;
         font-size: 14px;
-        margin-bottom: 5px;
       }
-      .website {
-        font-size: 14px;
+
+      h2.credential-title {
+        text-align: center;
         color: #000;
-        text-decoration: none;
+        font-size: 24px;
+        margin: 30px 0;
       }
     </style>
   </head>
   <body>
-    <!-- HEADER que te gustó: rojo, logo a la izquierda, título a la derecha -->
-    <div class="header">
-      <img src="data:image/png;base64,{{LOGO_BASE64}}" alt="LOGO" />
-      <h1>Servicios de Asistencia Vehicular</h1>
+    <div class="yellow-bar"></div>
+    <div class="logo-container">
+      <img
+        src="https://i.ibb.co/HryrDmt/rescate.png"
+        alt="Rescate Logo"
+        class="logo"
+      />
     </div>
 
-    <!-- WRAPPER PARA EL CONTENIDO PRINCIPAL -->
-    <div class="wrapper">
-      <!-- MAIN INFO: ID y PLAN -->
-      <div class="main-info">
-        <div>ID: {{ID}}</div>
-        <div>PLAN R - ILIMITADO</div>
+    <div class="main-info">
+      <div>ID: {{ID}}</div>
+      <div>PLAN</div>
+      <div>R -ILIMITADO</div>
+    </div>
+
+    <div class="section-header">DATOS DEL BENEFICIARIO</div>
+    <table class="data-table">
+      <tr>
+        <td>Apellido y Nombre:</td>
+        <td>{{NOMBRE}}</td>
+        <td>Fecha de Emision:</td>
+        <td>{{FECHA_EMISION}}</td>
+      </tr>
+      <tr>
+        <td>DNI:</td>
+        <td>{{DNI}}</td>
+        <td>Condicion:</td>
+        <td>{{CONDICION}}</td>
+      </tr>
+      <tr>
+        <td>Celular:</td>
+        <td>{{CELULAR}}</td>
+        <td>Email:</td>
+        <td>{{EMAIL}}</td>
+      </tr>
+    </table>
+
+    <div class="section-header">DOMICILIO</div>
+    <table class="data-table">
+      <tr>
+        <td>Direccion:</td>
+        <td>{{DIRECCION}}</td>
+        <td>Localidad:</td>
+        <td>{{LOCALIDAD}}</td>
+      </tr>
+      <tr>
+        <td>CP:</td>
+        <td>{{CP}}</td>
+        <td>Provincia:</td>
+        <td>{{PROVINCIA}}</td>
+      </tr>
+    </table>
+
+    <div class="section-header">DATOS DEL VEHICULO DESIGNADO</div>
+    <table class="data-table">
+      <tr>
+        <td>Marca:</td>
+        <td>{{MARCA}}</td>
+        <td>Modelo</td>
+        <td>{{MODELO}}</td>
+      </tr>
+      <tr>
+        <td>Color:</td>
+        <td>{{COLOR}}</td>
+        <td>Patente:</td>
+        <td>{{PATENTE}}</td>
+      </tr>
+    </table>
+
+    <div class="section-header">MEDIO DE PAGO</div>
+    <table class="data-table">
+      <tr>
+        <td>{{MEDIO_PAGO}}</td>
+      </tr>
+    </table>
+
+    <div class="terms">
+      <p>
+        <strong>Cobertura:</strong> La cobertura del servicio entrará en
+        vigencia 24 horas después de haber confirmado la contratación,
+        garantizando la disponibilidad de los beneficios a partir de ese
+        momento. 600 Km
+      </p>
+      <p>
+        <strong>Modalidad de Pago:</strong> El pago de la cuota será debitado
+        automáticamente por Rinkel Trail S.A. a través del método de pago
+        seleccionado al momento de la contratación.
+      </p>
+      <p>
+        <strong>Facturación y Período de contratación:</strong> La facturación
+        del servicio se realiza de manera mensual y deberá mantenerse activa por
+        un período mínimo de 12 meses consecutivos para garantizar la vigencia
+        de la cobertura.
+      </p>
+      <p>
+        <strong>Morosidad:</strong> Si no se realiza el pago de una cuota en el
+        mes correspondiente, el importe pendiente se cobrará al valor vigente
+        del plan contratado en el momento en que se efectúe el pago.
+      </p>
+      <p><strong>Exclusiones de contratación:</strong></p>
+      <ul>
+        <li>Vehículos de más de 3.500 kg.</li>
+        <li>
+          Vehículos que al momento de la contratación presentaran avería y/o no
+          se encontraran en normal estado de funcionamiento.
+        </li>
+      </ul>
+      <p>
+        El beneficiario asume el compromiso de usar el servicio en caso de
+        necesidad, sin abusos, excesos y/o fraude, utilizando el servicio
+        contratado exclusivamente para sí y con fines lícitos.
+      </p>
+      <p>
+        La factura por el pago del servicio se encuentra a disposición del
+        cliente.
+      </p>
+    </div>
+
+    <h2 class="credential-title">TU CREDENCIAL</h2>
+
+    <div class="credential-container">
+      <div class="credential">
+        <img
+          src="https://i.ibb.co/HryrDmt/rescate.png"
+          alt="Rescate Logo"
+          style="width: 200px; margin-bottom: 15px"
+        />
+        <div class="yellow-box">ID: {{ID}}</div>
+        <div class="yellow-box">R -ILIMITADO</div>
+        <div class="yellow-box">SOCIO: {{NOMBRE}}</div>
+        <div class="yellow-box">PATENTE: {{PATENTE}}</div>
       </div>
 
-      <!-- DATOS DEL BENEFICIARIO -->
-      <div class="section">DATOS DEL BENEFICIARIO</div>
-      <div class="content">
-        <div class="field">
-          <span class="label">Apellido y Nombre:</span> {{NOMBRE}}
-        </div>
-        <div class="field">
-          <span class="label">Fecha de Emisión:</span> {{FECHA_EMISION}}
-        </div>
-        <div class="field"><span class="label">DNI:</span> {{DNI}}</div>
-        <div class="field">
-          <span class="label">Condición:</span> {{CONDICION}}
-        </div>
-        <div class="field"><span class="label">Celular:</span> {{CELULAR}}</div>
-        <div class="field"><span class="label">Email:</span> {{EMAIL}}</div>
-      </div>
+      <div class="contact-box">
+        <div class="contact-title">Para solicitar asistencia llama al:</div>
+        <div class="phone-number">0800 - 122 -0498</div>
 
-      <!-- DOMICILIO -->
-      <div class="section">DOMICILIO</div>
-      <div class="content">
-        <div class="field">
-          <span class="label">Dirección:</span> {{DIRECCION}}
+        <div class="whatsapp-container">
+          <img
+            src="https://i.ibb.co/3dc3T33/wpplogo.png"
+            alt="WhatsApp"
+            class="whatsapp-icon"
+          />
+          <span>+54 (11) 5163 - 8954</span>
         </div>
-        <div class="field">
-          <span class="label">Localidad:</span> {{LOCALIDAD}}
+        <div style="text-align: center; color: #e0251b; font-size: 14px">
+          Solo mensajes
         </div>
-        <div class="field"><span class="label">CP:</span> {{CP}}</div>
-        <div class="field">
-          <span class="label">Provincia:</span> {{PROVINCIA}}
+
+        <div
+          style="
+            text-align: center;
+            color: #e0251b;
+            font-weight: bold;
+            margin: 20px 0;
+          "
+        >
+          WWW.RESCATE.COM.AR
         </div>
-      </div>
-
-      <!-- DATOS DEL VEHÍCULO -->
-      <div class="section">DATOS DEL VEHÍCULO DESIGNADO</div>
-      <div class="content">
-        <div class="field"><span class="label">Marca:</span> {{MARCA}}</div>
-        <div class="field"><span class="label">Modelo:</span> {{MODELO}}</div>
-        <div class="field"><span class="label">Color:</span> {{COLOR}}</div>
-        <div class="field"><span class="label">Patente:</span> {{PATENTE}}</div>
-      </div>
-
-      <!-- MEDIO DE PAGO -->
-      <div class="section">MEDIO DE PAGO</div>
-      <div class="content">
-        <div class="field">{{MEDIO_PAGO}}</div>
-      </div>
-
-      <!-- CONDICIONES GENERALES / COBERTURA / EXCLUSIONES -->
-      <div class="section">CONDICIONES GENERALES</div>
-      <div class="content">
-        <div class="disclaimer-content">
-          <p>
-            <strong>Cobertura:</strong> La cobertura del servicio entrará en
-            vigencia 24 horas después de haber confirmado la contratación,
-            garantizando la disponibilidad de los beneficios a partir de ese
-            momento.
-          </p>
-          <p>
-            <strong>Modalidad de Pago:</strong> El pago de la cuota será
-            debitado automáticamente por Rinkel Trail S.A. a través del método
-            de pago seleccionado al momento de la contratación.
-          </p>
-          <p>
-            <strong>Facturación y Periodo de contratación:</strong> La
-            facturación del servicio se realiza de manera mensual y deberá
-            mantenerse activa por un periodo mínimo de 12 meses consecutivos
-            para garantizar la vigencia de la cobertura.
-          </p>
-          <p>
-            <strong>Morosidad:</strong> Si no se realiza el pago de una cuota en
-            el mes correspondiente, el importe pendiente se cobrará al valor
-            vigente del plan contratado en el momento en que se efectúe el pago.
-          </p>
-          <p>
-            <strong>Exclusiones de contratación:</strong><br />
-            • Vehículos de más de 3.500 kg.<br />
-            • Vehículos que al momento de la contratación presentaran avería y/o
-            no se encontraran en normal estado de funcionamiento.
-          </p>
-          <p>
-            El beneficiario asume el compromiso de usar el servicio en caso de
-            necesidad, sin abusos, excesos y/o fraude, utilizando el servicio
-            contratado exclusivamente para sí y con fines lícitos.
-          </p>
-          <p>
-            La factura por el pago del servicio se encuentra a disposición del
-            cliente.
-          </p>
+        <div style="text-align: center; margin-top: 15px">
+          <img
+            src="https://i.ibb.co/tKf7t7P/rinkellogo.png"
+            alt="Social Icons"
+            style="width: 120px"
+          />
         </div>
       </div>
     </div>
-    <!-- Fin del .wrapper -->
-
-    <!-- FOOTER con dos recuadros (la credencial y la asistencia) -->
-    <div class="footer">
-      <!-- Recuadro 1: Credencial -->
-      <div class="credential-box">
-        <h3>TU CREDENCIAL</h3>
-        <div class="id-value">ID: {{ID}}</div>
-        <div class="plan-value">PLAN R - ILIMITADO</div>
-        <div class="socio-value">SOCIO: {{NOMBRE}}</div>
-      </div>
-
-      <!-- Recuadro 2: Asistencia -->
-      <div class="assistance-box">
-        <h3>Para solicitar asistencia llama al:</h3>
-        <div class="phone">0800 - 122 - 0498</div>
-        <div class="whatsapp">+54 (11) 5163 - 8954 (Solo mensajes)</div>
-        <a class="website" href="https://www.rescate.com.ar" target="_blank">
-          www.rescate.com.ar
-        </a>
-      </div>
-    </div>
-    <!-- Fin .footer -->
   </body>
 </html>
