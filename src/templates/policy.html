@@ -1,316 +1,294 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <title>Rescate - Póliza</title>
     <style>
-      /* Estilos generales y de página */
-      body {
-        font-family: Arial, sans-serif;
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 20px;
-      }
+        @page {
+            size: A4;
+            margin: 15mm 10mm;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+            color: #000;
+        }
 
-      .page {
-        page-break-after: always;
-      }
+        .page {
+            page-break-after: always;
+        }
 
-      .page:last-child {
-        page-break-after: avoid;
-      }
+        .page:last-child {
+            page-break-after: avoid;
+        }
 
-      /* Estilos de la primera página */
-      .yellow-bar {
-        background-color: #f6e847;
-        height: 40px;
-        width: 100%;
-        margin-bottom: 10px;
-      }
+        .yellow-bar {
+            background-color: #F6E847;
+            height: 30px;
+            width: 100%;
+            margin-bottom: 8px;
+        }
 
-      .logo-container {
-        text-align: center;
-        margin-bottom: 20px;
-      }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 10px;
+        }
 
-      .logo {
-        width: 300px;
-        height: auto;
-      }
+        .logo {
+            width: 250px;
+            height: auto;
+        }
 
-      .main-info {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-        color: #000;
-        font-weight: bold;
-      }
+        .main-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #000;
+            font-weight: bold;
+            font-size: 14px;
+        }
 
-      .section-header {
-        background-color: #f6e847;
-        padding: 8px;
-        font-weight: bold;
-        color: #e0251b;
-        border: 2px solid #000;
-        margin-bottom: 0;
-      }
+        .section-header {
+            background-color: #F6E847;
+            padding: 6px 8px;
+            font-weight: bold;
+            color: #E0251B;
+            border: 2px solid #000;
+            margin-bottom: 0;
+            font-size: 14px;
+        }
 
-      .data-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-        border: 2px solid #000;
-      }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            border: 2px solid #000;
+            font-size: 12px;
+        }
 
-      .data-table td {
-        border: 2px solid #000;
-        padding: 8px;
-        color: #000;
-      }
+        .data-table td {
+            border: 2px solid #000;
+            padding: 6px 8px;
+            color: #000;
+        }
 
-      .terms {
-        margin: 20px 0;
-        font-size: 14px;
-      }
+        .terms {
+            margin: 10px 0;
+            font-size: 11px;
+            line-height: 1.2;
+        }
 
-      /* Estilos de la segunda página */
-      .credential-container {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-      }
+        .terms p {
+            margin: 6px 0;
+        }
 
-      .credential {
-        border: 3px solid #e0251b;
-        padding: 15px;
-        width: 45%;
-        border-radius: 15px;
-        text-align: center;
-      }
+        .terms ul {
+            margin: 4px 0;
+            padding-left: 20px;
+        }
 
-      .yellow-box {
-        background-color: #f6e847;
-        padding: 6px;
-        margin: 5px 0;
-        text-align: center;
-        color: #e0251b;
-        font-weight: bold;
-        border: 2px solid #000;
-      }
+        .terms li {
+            margin: 2px 0;
+        }
 
-      .contact-box {
-        border: 3px solid #e0251b;
-        border-radius: 15px;
-        padding: 15px;
-        width: 45%;
-      }
+        h2.credential-title {
+            text-align: center;
+            color: #000;
+            font-size: 22px;
+            margin: 20px 0;
+        }
 
-      .contact-title {
-        background-color: #f6e847;
-        color: #e0251b;
-        font-weight: bold;
-        text-align: center;
-        padding: 8px;
-        border-radius: 10px;
-        border: 2px solid #000;
-      }
+        .credential-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
 
-      .phone-number {
-        background-color: #f6e847;
-        color: #e0251b;
-        font-size: 24px;
-        font-weight: bold;
-        padding: 8px;
-        border-radius: 10px;
-        text-align: center;
-        border: 2px solid #000;
-        margin: 10px 0;
-      }
+        .credential {
+            border: 3px solid #E0251B;
+            padding: 15px;
+            width: 45%;
+            border-radius: 15px;
+            text-align: center;
+        }
 
-      .whatsapp-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 10px 0;
-        color: #e0251b;
-        font-weight: bold;
-        font-size: 18px;
-      }
+        .yellow-box {
+            background-color: #F6E847;
+            padding: 6px;
+            margin: 5px 0;
+            text-align: center;
+            color: #E0251B;
+            font-weight: bold;
+            border: 2px solid #000;
+            text-transform: uppercase;
+        }
 
-      h2.credential-title {
-        text-align: center;
-        color: #000;
-        font-size: 24px;
-        margin: 30px 0;
-      }
+        .contact-box {
+            border: 3px solid #E0251B;
+            border-radius: 15px;
+            padding: 15px;
+            width: 45%;
+        }
+
+        .contact-title {
+            background-color: #F6E847;
+            color: #E0251B;
+            font-weight: bold;
+            text-align: center;
+            padding: 8px;
+            border-radius: 10px;
+            border: 2px solid #000;
+        }
+
+        .phone-number {
+            background-color: #F6E847;
+            color: #E0251B;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 8px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #000;
+            margin: 10px 0;
+        }
+
+        .whatsapp-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            color: #E0251B;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .patente-cell {
+            text-transform: uppercase;
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <!-- Primera Página -->
     <div class="page">
-      <div class="yellow-bar"></div>
-      <div class="logo-container">
-        <img
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image003-lQUo6M0y8FjldKudsUzMZXPEtTT9Ig.png"
-          alt="Rescate Logo"
-          class="logo"
-        />
-      </div>
+        <div class="yellow-bar"></div>
+        <div class="logo-container">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image003-lQUo6M0y8FjldKudsUzMZXPEtTT9Ig.png" alt="Rescate Logo" class="logo">
+        </div>
 
-      <div class="main-info">
-        <div>ID: {{ID}}</div>
-        <div>PLAN</div>
-        <div>R -ILIMITADO</div>
-      </div>
+        <div class="main-info">
+            <div>ID: {{ID}}</div>
+            <div>PLAN</div>
+            <div>R -ILIMITADO</div>
+        </div>
 
-      <div class="section-header">DATOS DEL BENEFICIARIO</div>
-      <table class="data-table">
-        <tr>
-          <td>Apellido y Nombre:</td>
-          <td>{{NOMBRE}}</td>
-          <td>Fecha de Emision:</td>
-          <td>{{FECHA_EMISION}}</td>
-        </tr>
-        <tr>
-          <td>DNI:</td>
-          <td>{{DNI}}</td>
-          <td>Condicion:</td>
-          <td>{{CONDICION}}</td>
-        </tr>
-        <tr>
-          <td>Celular:</td>
-          <td>{{CELULAR}}</td>
-          <td>Email:</td>
-          <td>{{EMAIL}}</td>
-        </tr>
-      </table>
+        <div class="section-header">DATOS DEL BENEFICIARIO</div>
+        <table class="data-table">
+            <tr>
+                <td>Apellido y Nombre:</td>
+                <td>{{NOMBRE}}</td>
+                <td>Fecha de Emision:</td>
+                <td>{{FECHA_EMISION}}</td>
+            </tr>
+            <tr>
+                <td>DNI:</td>
+                <td>{{DNI}}</td>
+                <td>Condicion:</td>
+                <td>{{CONDICION}}</td>
+            </tr>
+            <tr>
+                <td>Celular:</td>
+                <td>{{CELULAR}}</td>
+                <td>Email:</td>
+                <td>{{EMAIL}}</td>
+            </tr>
+        </table>
 
-      <div class="section-header">DOMICILIO</div>
-      <table class="data-table">
-        <tr>
-          <td>Direccion:</td>
-          <td>{{DIRECCION}}</td>
-          <td>Localidad:</td>
-          <td>{{LOCALIDAD}}</td>
-        </tr>
-        <tr>
-          <td>CP:</td>
-          <td>{{CP}}</td>
-          <td>Provincia:</td>
-          <td>{{PROVINCIA}}</td>
-        </tr>
-      </table>
+        <div class="section-header">DOMICILIO</div>
+        <table class="data-table">
+            <tr>
+                <td>Direccion:</td>
+                <td>{{DIRECCION}}</td>
+                <td>Localidad:</td>
+                <td>{{LOCALIDAD}}</td>
+            </tr>
+            <tr>
+                <td>CP:</td>
+                <td>{{CP}}</td>
+                <td>Provincia:</td>
+                <td>{{PROVINCIA}}</td>
+            </tr>
+        </table>
 
-      <div class="section-header">DATOS DEL VEHICULO DESIGNADO</div>
-      <table class="data-table">
-        <tr>
-          <td>Marca:</td>
-          <td>{{MARCA}}</td>
-          <td>Modelo</td>
-          <td>{{MODELO}}</td>
-        </tr>
-        <tr>
-          <td>Color:</td>
-          <td>{{COLOR}}</td>
-          <td>Patente:</td>
-          <td>{{PATENTE}}</td>
-        </tr>
-      </table>
+        <div class="section-header">DATOS DEL VEHICULO DESIGNADO</div>
+        <table class="data-table">
+            <tr>
+                <td>Marca:</td>
+                <td>{{MARCA}}</td>
+                <td>Modelo</td>
+                <td>{{MODELO}}</td>
+            </tr>
+            <tr>
+                <td>Color:</td>
+                <td>{{COLOR}}</td>
+                <td>Patente:</td>
+                <td class="patente-cell">{{PATENTE}}</td>
+            </tr>
+        </table>
 
-      <div class="section-header">MEDIO DE PAGO</div>
-      <table class="data-table">
-        <tr>
-          <td>{{MEDIO_PAGO}}</td>
-        </tr>
-      </table>
+        <div class="section-header">MEDIO DE PAGO</div>
+        <table class="data-table">
+            <tr>
+                <td>{{MEDIO_PAGO}}</td>
+            </tr>
+        </table>
 
-      <div class="terms">
-        <p>
-          <strong>Cobertura:</strong> La cobertura del servicio entrará en
-          vigencia 72 horas después de haber confirmado la contratación,
-          garantizando la disponibilidad de los beneficios a partir de ese
-          momento. 600 Km
-        </p>
-        <p>
-          <strong>Modalidad de Pago:</strong> El pago de la cuota será debitado
-          automáticamente por Rinkel Trail S.A. a través del método de pago
-          seleccionado al momento de la contratación.
-        </p>
-        <p>
-          <strong>Facturación y Período de contratación:</strong> La facturación
-          del servicio se realiza de manera mensual y deberá mantenerse activa
-          por un período mínimo de 12 meses consecutivos para garantizar la
-          vigencia de la cobertura.
-        </p>
-        <p>
-          <strong>Morosidad:</strong> Si no se realiza el pago de una cuota en
-          el mes correspondiente, el importe pendiente se cobrará al valor
-          vigente del plan contratado en el momento en que se efectúe el pago.
-        </p>
-        <p><strong>Exclusiones de contratación:</strong></p>
-        <ul>
-          <li>Vehículos de más de 3.500 kg.</li>
-          <li>
-            Vehículos que al momento de la contratación presentaran avería y/o
-            no se encontraran en normal estado de funcionamiento.
-          </li>
-        </ul>
-        <p>
-          El beneficiario asume el compromiso de usar el servicio en caso de
-          necesidad, sin abusos, excesos y/o fraude, utilizando el servicio
-          contratado exclusivamente para sí y con fines lícitos.
-        </p>
-        <p>
-          La factura por el pago del servicio se encuentra a disposición del
-          cliente.
-        </p>
-      </div>
+        <div class="terms">
+            <p><strong>Cobertura:</strong> La cobertura del servicio entrará en vigencia 72 horas después de haber confirmado la contratación, garantizando la disponibilidad de los beneficios a partir de ese momento. 600 Km</p>
+            <p><strong>Modalidad de Pago:</strong> El pago de la cuota será debitado automáticamente por Rinkel Trail S.A. a través del método de pago seleccionado al momento de la contratación.</p>
+            <p><strong>Facturación y Período de contratación:</strong> La facturación del servicio se realiza de manera mensual y deberá mantenerse activa por un período mínimo de 12 meses consecutivos para garantizar la vigencia de la cobertura.</p>
+            <p><strong>Morosidad:</strong> Si no se realiza el pago de una cuota en el mes correspondiente, el importe pendiente se cobrará al valor vigente del plan contratado en el momento en que se efectúe el pago.</p>
+            <p><strong>Exclusiones de contratación:</strong></p>
+            <ul>
+                <li>Vehículos de más de 3.500 kg.</li>
+                <li>Vehículos que al momento de la contratación presentaran avería y/o no se encontraran en normal estado de funcionamiento.</li>
+            </ul>
+            <p>El beneficiario asume el compromiso de usar el servicio en caso de necesidad, sin abusos, excesos y/o fraude, utilizando el servicio contratado exclusivamente para sí y con fines lícitos.</p>
+            <p>La factura por el pago del servicio se encuentra a disposición del cliente.</p>
+        </div>
     </div>
 
     <!-- Segunda Página -->
     <div class="page">
-      <h2 class="credential-title">TU CREDENCIAL</h2>
-      <div class="credential-container">
-        <div class="credential">
-          <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image003-lQUo6M0y8FjldKudsUzMZXPEtTT9Ig.png"
-            alt="Rescate Logo"
-            style="width: 180px; margin-bottom: 10px"
-          />
-          <div class="yellow-box">ID: {{ID}}</div>
-          <div class="yellow-box">PLAN: R -ILIMITADO</div>
-          <div class="yellow-box">SOCIO: {{NOMBRE}}</div>
-          <div class="yellow-box">PATENTE: {{PATENTE}}</div>
+        <h2 class="credential-title">TU CREDENCIAL</h2>
+        <div class="credential-container">
+            <div class="credential">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image003-lQUo6M0y8FjldKudsUzMZXPEtTT9Ig.png" alt="Rescate Logo" style="width: 180px; margin-bottom: 10px;">
+                <div class="yellow-box">ID: {{ID}}</div>
+                <div class="yellow-box">PLAN: R -ILIMITADO</div>
+                <div class="yellow-box">SOCIO: {{NOMBRE}}</div>
+                <div class="yellow-box">PATENTE: {{PATENTE}}</div>
+            </div>
+            
+            <div class="contact-box">
+                <div class="contact-title">Para solicitar asistencia llama al:</div>
+                <div class="phone-number">0800 - 122 -0498</div>
+                
+                <div class="whatsapp-container">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image011-Dko4wFMwHldSshRZ6RlvX9k1PQVEYg.png" alt="WhatsApp" style="width: 25px; height: 25px; margin-right: 10px;">
+                    <span>+54 (11) 5163 - 8954</span>
+                </div>
+                <div style="text-align: center; color: #E0251B; font-size: 12px;">
+                    Solo mensajes
+                </div>
+                
+                <div style="text-align: center; color: #E0251B; font-weight: bold; margin: 15px 0;">
+                    WWW.RESCATE.COM.AR
+                </div>
+            </div>
         </div>
-
-        <div class="contact-box">
-          <div class="contact-title">Para solicitar asistencia llama al:</div>
-          <div class="phone-number">0800 - 122 -0498</div>
-
-          <div class="whatsapp-container">
-            <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image011-Dko4wFMwHldSshRZ6RlvX9k1PQVEYg.png"
-              alt="WhatsApp"
-              style="width: 25px; height: 25px; margin-right: 10px"
-            />
-            <span>+54 (11) 5163 - 8954</span>
-          </div>
-          <div style="text-align: center; color: #e0251b; font-size: 12px">
-            Solo mensajes
-          </div>
-
-          <div
-            style="
-              text-align: center;
-              color: #e0251b;
-              font-weight: bold;
-              margin: 15px 0;
-            "
-          >
-            WWW.RESCATE.COM.AR
-          </div>
-        </div>
-      </div>
     </div>
-  </body>
+</body>
 </html>
