@@ -24,6 +24,28 @@ const validateEmail = [
   body('vehicle.modelo').notEmpty().withMessage('Modelo es requerido'),
 ];
 
+// Template del email
+const getEmailTemplate = (clientName: string) => `
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div style="text-align: center; margin-bottom: 25px;">
+      <img 
+        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image003-lQUo6M0y8FjldKudsUzMZXPEtTT9Ig.png" 
+        alt="Rescate Logo" 
+        style="width: 200px; max-width: 100%; height: auto;"
+      />
+    </div>
+    <div style="background-color: #ffffff; padding: 20px; border-radius: 5px;">
+      <h1 style="color: #E0251B; text-align: center; font-size: 24px; margin-bottom: 20px;">¡Bienvenido a nuestro servicio de grúas!</h1>
+      <p style="color: #333333; font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Estimado/a ${clientName},</p>
+      <p style="color: #333333; font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Adjunto encontrará su póliza de seguro.</p>
+      <p style="color: #333333; font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Ante cualquier emergencia, contacte a nuestra línea de asistencia:</p>
+      <p style="text-align: center; font-weight: bold; color: #E0251B; font-size: 20px; margin: 25px 0;">
+        0800 - 122 - 0498
+      </p>
+    </div>
+  </div>
+`;
+
 // Endpoint para enviar email
 router.post(
   '/send-policy-email',
@@ -52,7 +74,7 @@ router.post(
       // Generar PDF
       const pdfData = {
         id: polizaNumber,
-        plan: 'AUTO - R FULL',
+        plan: 'R -ILIMITADO',
         beneficiario: {
           nombre: clientName,
           dni: dni,
@@ -71,7 +93,7 @@ router.post(
           marca: vehicle.marca,
           modelo: vehicle.modelo,
           color: vehicle.color || '-',
-          patente: vehicle.patente,
+          patente: vehicle.patente.toUpperCase(), // Aseguramos que la patente esté en mayúsculas
         },
         medioPago: 'CBU',
       };
@@ -91,12 +113,7 @@ router.post(
         from: process.env.EMAIL_USER,
         to: clientEmail,
         subject: `Póliza de Seguro #${polizaNumber}`,
-        html: `
-        <h1>¡Bienvenido a nuestro servicio de grúas!</h1>
-        <p>Estimado/a ${clientName},</p>
-        <p>Adjunto encontrará su póliza de seguro.</p>
-        <p>Ante cualquier emergencia, contacte a nuestra línea de asistencia.</p>
-      `,
+        html: getEmailTemplate(clientName),
         attachments: [
           {
             filename: `poliza-${polizaNumber}.pdf`,
