@@ -25,7 +25,7 @@ const validateEmail = [
 ];
 
 // Template del email
-const getEmailTemplate = (clientName: string) => `
+const getEmailTemplate = (clientName: string, provisorio: boolean) => `
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
     <div style="text-align: center; margin-bottom: 25px;">
       <img 
@@ -37,7 +37,9 @@ const getEmailTemplate = (clientName: string) => `
     <div style="background-color: #ffffff; padding: 20px; border-radius: 5px;">
       <h1 style="color: #E0251B; text-align: center; font-size: 24px; margin-bottom: 20px;">¡Bienvenido a nuestro servicio de grúas!</h1>
       <p style="color: #333333; font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Estimado/a ${clientName},</p>
-      <p style="color: #333333; font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Adjunto encontrará su póliza de seguro.</p>
+      <p style="color: #333333; font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Adjunto encontrará su póliza de seguro${
+        provisorio ? ' provisoria' : ''
+      }.</p>
       <p style="color: #333333; font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Ante cualquier emergencia, contacte a nuestra línea de asistencia:</p>
       <p style="text-align: center; font-weight: bold; color: #E0251B; font-size: 20px; margin: 25px 0;">
         0800 - 122 - 0498
@@ -75,6 +77,7 @@ router.post(
       const pdfData = {
         id: polizaNumber,
         plan: 'R -ILIMITADO',
+        provisorio: req.body.provisorio || false,
         beneficiario: {
           nombre: clientName,
           dni: dni,
@@ -113,7 +116,7 @@ router.post(
         from: process.env.EMAIL_USER,
         to: clientEmail,
         subject: `Póliza de Seguro #${polizaNumber}`,
-        html: getEmailTemplate(clientName),
+        html: getEmailTemplate(clientName, req.body.provisorio || false),
         attachments: [
           {
             filename: `poliza-${polizaNumber}.pdf`,
