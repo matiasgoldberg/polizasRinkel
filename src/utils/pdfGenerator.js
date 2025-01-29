@@ -76,6 +76,7 @@ const generatePolicyPDF = (data) =>
         '{{COLOR}}': data.vehiculo.color || '-',
         '{{PATENTE}}': data.vehiculo.patente,
         '{{MEDIO_PAGO}}': data.medioPago,
+        '{{PROVISORIO_CLASS}}': data.provisorio ? '' : 'hidden',
       };
       // Reemplazar cada variable en el template
       Object.entries(replacements).forEach(([key, value]) => {
