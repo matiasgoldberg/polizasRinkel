@@ -78,6 +78,11 @@ export const swaggerDocument = {
                     type: 'string',
                     description: 'Provincia',
                   },
+                  provisorio: {
+                    type: 'boolean',
+                    description: 'Indica si la póliza es provisoria',
+                    default: false,
+                  },
                   vehicle: {
                     type: 'object',
                     required: ['patente', 'marca', 'modelo'],
