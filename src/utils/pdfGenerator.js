@@ -1,4 +1,3 @@
-// src/utils/pdfGenerator.js
 'use strict';
 var __awaiter =
   (this && this.__awaiter) ||
@@ -40,10 +39,10 @@ var __importDefault =
   };
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.generatePolicyPDF = void 0;
-// src/utils/pdfGenerator.ts
 const fs_1 = __importDefault(require('fs'));
 const path_1 = __importDefault(require('path'));
 const puppeteer_1 = __importDefault(require('puppeteer'));
+
 const generatePolicyPDF = (data) =>
   __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -53,12 +52,9 @@ const generatePolicyPDF = (data) =>
         '../templates/policy.html'
       );
       let template = fs_1.default.readFileSync(templatePath, 'utf-8');
-      // Leer el logo y convertirlo a base64
-      const logoPath = path_1.default.join(__dirname, '../assets/logo.png');
-      const logoBase64 = fs_1.default.readFileSync(logoPath).toString('base64');
+
       // Reemplazar todas las variables en el template
       const replacements = {
-        '{{LOGO_BASE64}}': logoBase64,
         '{{ID}}': data.id,
         '{{PLAN}}': data.plan,
         '{{NOMBRE}}': data.beneficiario.nombre,
@@ -76,22 +72,26 @@ const generatePolicyPDF = (data) =>
         '{{COLOR}}': data.vehiculo.color || '-',
         '{{PATENTE}}': data.vehiculo.patente,
         '{{MEDIO_PAGO}}': data.medioPago,
-        '{{PROVISORIO_CLASS}}': data.provisorio ? '' : 'hidden',
+        '{{PROVISORIO_CLASS}}': data.provisorio ? '' : 'hidden', // Agregamos esta línea
       };
+
       // Reemplazar cada variable en el template
       Object.entries(replacements).forEach(([key, value]) => {
         template = template.replace(new RegExp(key, 'g'), value);
       });
+
       // Iniciar Puppeteer
       const browser = yield puppeteer_1.default.launch({
-        headless: true, // Cambiado de 'new' a true
+        headless: true,
         args: ['--no-sandbox'],
       });
       const page = yield browser.newPage();
+
       // Cargar el HTML
       yield page.setContent(template, {
         waitUntil: 'networkidle0',
       });
+
       // Generar PDF
       const pdfBuffer = yield page.pdf({
         format: 'A4',
@@ -103,11 +103,13 @@ const generatePolicyPDF = (data) =>
         },
         printBackground: true,
       });
+
       yield browser.close();
-      return Buffer.from(pdfBuffer); // Convertido explícitamente a Buffer
+      return Buffer.from(pdfBuffer);
     } catch (error) {
       console.error('Error generando PDF:', error);
       throw error;
     }
   });
+
 exports.generatePolicyPDF = generatePolicyPDF;
