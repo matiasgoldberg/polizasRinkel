@@ -6,6 +6,7 @@ import puppeteer from 'puppeteer-core';
 interface PolicyData {
   id: string;
   plan: string;
+  provisorio: boolean;
   beneficiario: {
     nombre: string;
     dni: string;
@@ -54,6 +55,7 @@ export const generatePolicyPDF = async (data: PolicyData): Promise<Buffer> => {
       '{{COLOR}}': data.vehiculo.color || '-',
       '{{PATENTE}}': data.vehiculo.patente,
       '{{MEDIO_PAGO}}': data.medioPago,
+      '{{PROVISORIO_CLASS}}': data.provisorio ? '' : 'hidden',
     };
 
     // Reemplazar cada variable en el template
