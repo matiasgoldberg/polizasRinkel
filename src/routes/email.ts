@@ -37,9 +37,7 @@ const getEmailTemplate = (clientName: string, provisorio: boolean) => `
     <div style="background-color: #ffffff; padding: 20px; border-radius: 5px;">
       <h1 style="color: #E0251B; text-align: center; font-size: 24px; margin-bottom: 20px;">¡Bienvenido a nuestro servicio de grúas!</h1>
       <p style="color: #333333; font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Estimado/a ${clientName},</p>
-      <p style="color: #333333; font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Adjunto encontrará su póliza de seguro${
-        provisorio ? ' provisoria' : ''
-      }.</p>
+      <p style="color: #333333; font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Adjunto encontrará su póliza de seguro${provisorio ? ' provisoria' : ''}.</p>
       <p style="color: #333333; font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Ante cualquier emergencia, contacte a nuestra línea de asistencia:</p>
       <p style="text-align: center; font-weight: bold; color: #E0251B; font-size: 20px; margin: 25px 0;">
         0800 - 122 - 0498
@@ -49,96 +47,155 @@ const getEmailTemplate = (clientName: string, provisorio: boolean) => `
 `;
 
 // Endpoint para enviar email
-router.post(
-  '/send-policy-email',
-  validateEmail,
-  async (req: Request, res: Response) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
-
-      const {
-        polizaNumber,
-        cuponNumber,
-        clientName,
-        clientEmail,
-        dni,
-        telefono,
-        direccion,
-        cp,
-        localidad,
-        provincia,
-        vehicle,
-      } = req.body;
-
-      // Generar PDF
-      const pdfData = {
-        id: polizaNumber,
-        plan: 'R -ILIMITADO',
-        provisorio: req.body.provisorio || false,
-        beneficiario: {
-          nombre: clientName,
-          dni: dni,
-          celular: telefono,
-          email: clientEmail,
-          fechaEmision: new Date().toLocaleDateString(),
-          condicion: 'Cons. Final',
-        },
-        domicilio: {
-          direccion: direccion,
-          cp: cp,
-          localidad: localidad,
-          provincia: provincia,
-        },
-        vehiculo: {
-          marca: vehicle.marca,
-          modelo: vehicle.modelo,
-          color: vehicle.color || '-',
-          patente: vehicle.patente.toUpperCase(), // Aseguramos que la patente esté en mayúsculas
-        },
-        medioPago: 'CBU',
-      };
-
-      const pdfBuffer = await generatePolicyPDF(pdfData);
-
-      // Configurar email con PDF adjunto
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS,
-        },
-      });
-
-      const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: clientEmail,
-        subject: `Póliza de Seguro #${polizaNumber}`,
-        html: getEmailTemplate(clientName, req.body.provisorio || false),
-        attachments: [
-          {
-            filename: `poliza-${polizaNumber}.pdf`,
-            content: pdfBuffer,
-          },
-        ],
-      };
-
-      await transporter.sendMail(mailOptions);
-
-      res.status(200).json({
-        message: 'Email enviado exitosamente con la póliza adjunta',
-        success: true,
-      });
-    } catch (error: any) {
-      console.error('Error:', error);
-      res.status(500).json({
-        message: 'Error al procesar la solicitud',
-        error: error.message,
-      });
+router.post('/send-policy-email', validateEmail, async (req: Request, res: Response) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
+
+    const {
+      polizaNumber,
+      cuponNumber,
+      clientName,
+      clientEmail,
+      dni,
+      telefono,
+      direccion,
+      cp,
+      localidad,
+      provincia,
+      vehicle,
+      provisorio
+    } = req.body;
+
+    const pdfData = {
+      id: polizaNumber,
+      plan: 'R -ILIMITADO',
+      provisorio: provisorio || false,
+      beneficiario: {
+        nombre: clientName,
+        dni: dni,
+        celular: telefono,
+        email: clientEmail,
+        fechaEmision: new Date().toLocaleDateString(),
+        condicion: 'Cons. Final',
+      },
+      domicilio: {
+        direccion: direccion,
+        cp: cp,
+        localidad: localidad,
+        provincia: provincia,
+      },
+      vehiculo: {
+        marca: vehicle.marca,
+        modelo: vehicle.modelo,
+        color: vehicle.color || '-',
+        patente: vehicle.patente.toUpperCase(),
+      },
+      medioPago: 'CBU',
+    };
+
+    const pdfBuffer = await generatePolicyPDF(pdfData);
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: clientEmail,
+      subject: `Póliza de Seguro #${polizaNumber}`,
+      html: getEmailTemplate(clientName, provisorio || false),
+      attachments: [
+        {
+          filename: `poliza-${polizaNumber}.pdf`,
+          content: pdfBuffer,
+        },
+      ],
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({
+      message: 'Email enviado exitosamente con la póliza adjunta',
+      success: true,
+    });
+  } catch (error: any) {
+    console.error('Error:', error);
+    res.status(500).json({
+      message: 'Error al procesar la solicitud',
+      error: error.message,
+    });
   }
-);
+});
+
+// Nuevo endpoint para solo generar PDF
+router.post('/generate-pdf', validateEmail, async (req: Request, res: Response) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const {
+      polizaNumber,
+      cuponNumber,
+      clientName,
+      clientEmail,
+      dni,
+      telefono,
+      direccion,
+      cp,
+      localidad,
+      provincia,
+      vehicle,
+      provisorio
+    } = req.body;
+
+    const pdfData = {
+      id: polizaNumber,
+      plan: 'R -ILIMITADO',
+      provisorio: provisorio || false,
+      beneficiario: {
+        nombre: clientName,
+        dni: dni,
+        celular: telefono,
+        email: clientEmail,
+        fechaEmision: new Date().toLocaleDateString(),
+        condicion: 'Cons. Final',
+      },
+      domicilio: {
+        direccion: direccion,
+        cp: cp,
+        localidad: localidad,
+        provincia: provincia,
+      },
+      vehiculo: {
+        marca: vehicle.marca,
+        modelo: vehicle.modelo,
+        color: vehicle.color || '-',
+        patente: vehicle.patente.toUpperCase(),
+      },
+      medioPago: 'CBU',
+    };
+
+    const pdfBuffer = await generatePolicyPDF(pdfData);
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=poliza-${polizaNumber}.pdf`);
+    res.send(pdfBuffer);
+  } catch (error: any) {
+    console.error('Error:', error);
+    res.status(500).json({
+      message: 'Error al generar el PDF',
+      error: error.message,
+    });
+  }
+});
 
 export default router;
